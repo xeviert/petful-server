@@ -53,8 +53,8 @@ class Queue {
     let currentNode = this.first;
 
     while (currentNode !== null) {
-      result.push(current.value);
-      current = current.next;
+      result.push(currentNode.value);
+      currentNode = currentNode.next;
     }
     return result;
   }

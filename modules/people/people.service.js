@@ -1,21 +1,18 @@
 const Queue = require('../queue/Queue')
-const { people } = require('../../store')
+const store = require('../../store')
 
 // Set up initial data.
 // --------------------
 
-const PeopleQ = new Queue()
-
-people.forEach(person => {
-  PeopleQ.enqueue(person);
-})
+const people = new Queue()
+store.people.forEach(person => people.enqueue(person))
 
 // --------------------
 
 const PeopleService = {
   get() {
     // Return all people in the queue.
-    return PeopleQ.all();
+    return people.all();
   },
 
   enqueue(person) {

@@ -9,14 +9,7 @@ const peopleRouter = express.Router()
 peopleRouter
   .route('/')  
   .get((req, res, next) => {
-    // Return all the people currently in the queue.
-    let people = PeopleService.get()
-      if (!people) {
-        return res.status(400).error({
-          error: 'No one left in line'
-        })
-      }
-      return res.json(people)
+    res.json(PeopleService.get())
   })
   .post(json, (req, res, next) => {
     // Add a new person to the queue.
