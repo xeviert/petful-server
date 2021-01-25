@@ -1,16 +1,44 @@
+/*eslint-disable*/
 const express = require('express')
 const json = require('body-parser').json()
 
-const People = require('./people.service')
+const PeopleService = require('./people.service')
 
-const router = express.Router()
+const peopleRouter = express.Router()
 
-router.get('/', (req, res) => {
-  // Return all the people currently in the queue.
-})
+peopleRouter
+  .route('/')  
+  .get((req, res, next) => {
+    // Return all the people currently in the queue.
+    let people = PeopleService.get()
+      if (!people) {
+        return res.status(400).error({
+          error: 'No one left in line'
+        })
+      }
+      return res.json(people)
+  })
+  .post(json, (req, res, next) => {
+    // Add a new person to the queue.
+    const { name } = req.body;
+    const person = name;
 
-router.post('/', json, (req, res) => {
-  // Add a new person to the queue.
-})
+    if (!name) {
+      return res.status(400).json({
+        error: 'Name is missing'
+      })
+    }
+    res.json(PeopleService.enqueue(person))
+  })
+  .delete((req, res, next) => {
 
-module.exports = router
+    const people = PeopleService.dequeue();
+    if (!people) {
+      return res.status(400).json({
+        error: 'None to delete'
+      })
+    }
+    return res.json(people);
+  })
+
+module.exports = peopleRouter

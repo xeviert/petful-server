@@ -4,14 +4,30 @@ const json = require('body-parser').json()
 const Pets = require('./pets.service')
 const People = require('../people/people.service')
 
-const router = express.Router()
+const petRouter = express.Router()
 
-router.get('/', (req, res) => {
-  // Return all pets currently up for adoption.
-})
+petRouter
+  .route('/')
+  .get((req, res, next) => {
+    // Return all pets currently up for adoption.
+    let pets = Pets.get();
+    return res.status(200).json(pets);
+  })
 
-router.delete('/', json, (req, res) => {
-  // Remove a pet from adoption.
-})
+petRouter
+  .route('/:pet')
+  .delete((req, res, next) => {
+    // Remove a pet from adoption.
+    let pet = req.params.pet;
+    let newAdopter = {};
+    try {
+      newAdopter.pet = Pets.dequeue(pet);
+      newAdopter.owner = People.dequeue();
+    } catch (e) {
+      return res.status(400).json(e.message);
+    }
 
-module.exports = router
+    return res.status(200).json(newAdopter);
+  });
+
+module.exports = petRouter;
