@@ -46,18 +46,17 @@ class Queue {
     // Return the next item in the queue.
     return this.first.value
   }
+}
 
-  all() {
-    // Return all items in the queue.
+const displayQ = (queue) => {
     let result = [];
-    let currentNode = this.first;
+    let currentNode = queue.first;
 
     while (currentNode !== null) {
       result.push(currentNode.value);
       currentNode = currentNode.next;
     }
     return result;
-  }
 }
 
-module.exports = Queue
+module.exports = { Queue, displayQ }

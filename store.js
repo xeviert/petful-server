@@ -2,7 +2,8 @@ module.exports = {
   people: [
     'Randy Lahey',
     'Trevor Cory',
-    'Jim Lahey'
+    'Jim Lahey',
+    'Freddie Carthy',
   ],
 
   dogs: [
@@ -27,12 +28,12 @@ module.exports = {
     },
 
     {
-      imageURL: 'https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-      description: 'Black pug.',
-      name: 'Bilbo',
-      gender: 'Male',
       age: 3,
       breed: 'Pug',
+      description: 'Black pug.',
+      gender: 'Male',
+      imageURL: 'https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+      name: 'Bilbo',
       story: 'Owner Passed away'
     },
 
@@ -57,12 +58,12 @@ module.exports = {
     },
 
     {
-      imageURL: 'https://images.pexels.com/photos/551628/pexels-photo-551628.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-      description: 'A smiling golden-brown golden retreiver listening to music.',
-      name: 'Zeke',
-      gender: 'Male',
       age: 3,
       breed: 'Golden Retriever',
+      description: 'A smiling golden-brown golden retreiver listening to music.',
+      gender: 'Male',
+      imageURL: 'https://images.pexels.com/photos/551628/pexels-photo-551628.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+      name: 'Zeke',
       story: 'Owner Passed away'
     },
 

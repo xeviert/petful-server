@@ -12,16 +12,15 @@ peopleRouter
     res.json(PeopleService.get())
   })
   .post(json, (req, res, next) => {
-    // Add a new person to the queue.
     const { name } = req.body;
-    const person = name;
+    const data = name;
 
     if (!name) {
       return res.status(400).json({
         error: 'Name is missing'
       })
     }
-    res.json(PeopleService.enqueue(person))
+    res.status(200).json(PeopleService.enqueue(data))
   })
   .delete((req, res, next) => {
 

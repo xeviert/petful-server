@@ -1,33 +1,48 @@
 const express = require('express')
-const json = require('body-parser').json()
-
-const Pets = require('./pets.service')
-const People = require('../people/people.service')
+const { CatService, DogService } = require('./pets.service')
 
 const petRouter = express.Router()
 
 petRouter
-  .route('/')
+  .route('/cat')
   .get((req, res, next) => {
-    // Return all pets currently up for adoption.
-    let pets = Pets.get();
-    return res.status(200).json(pets);
+    let cats = CatService.get();
+    if (!cats) {
+      return res.status(400).json({
+        error: 'None cats left'
+      });
+    }
+    return res.status(200).json(cats);
   })
+  .delete((req, res, next) => {
+    const cats = CatService.adoptCat();
+    if (!cats) {
+      return res.status(400).json({
+        error: 'None cats avail. Pick doggos',
+      });
+    }
+    res.status(200).send(cats);
+  });
 
 petRouter
-  .route('/:pet')
-  .delete((req, res, next) => {
-    // Remove a pet from adoption.
-    let pet = req.params.pet;
-    let newAdopter = {};
-    try {
-      newAdopter.pet = Pets.dequeue(pet);
-      newAdopter.owner = People.dequeue();
-    } catch (e) {
-      return res.status(400).json(e.message);
+  .route('/dog')
+  .get((req, res) => {
+    const dogs = DogService.get();
+    if (!dogs) {
+      return res.status(400).json({
+        error: 'None dogs left',
+      });
     }
-
-    return res.status(200).json(newAdopter);
+    return res.json(dogs);
+  })
+  .delete((req, res, next) => {
+    const dogs = DogService.adoptDog();
+    if (!dogs) {
+      return res.status(400).json({
+        error: 'None doggos, get cats'
+      });
+    }
+    return res.status(200).send(dogs)
   });
 
 module.exports = petRouter;

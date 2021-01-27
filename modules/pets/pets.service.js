@@ -1,4 +1,4 @@
-const Queue = require('../queue/Queue');
+const { Queue, displayQ } = require('../queue/Queue');
 const { cats, dogs } = require('../../store');
 
 // Set up initial data.
@@ -15,34 +15,35 @@ dogs.forEach(el => {
 });
 // --------------------
 
-module.exports = {
+const CatService = {
   get() {
-    // Return the pets next in line to be adopted.
-    let firstPets = {
-      cat : CatQ.show(),
-      dog : DogQ.show()
-    };
-
-    if (!firstPets.cat) {
-      cats.forEach(el => {
-        CatQ.enqueue(el);
-      });
-      firstPets.cat = CatQ.show();
-    }
-
-    if (!firstPets.dog) {
-      dogs.forEach(el => {
-        DogQ.enqueue(el);
-      });
-      firstPets.dog = DogQ.show();
-    }
-    return firstPets;
+    let showCats = displayQ(CatQ);
+    return showCats;
   },
-
-  dequeue(pet) {
-    // Remove a pet from the queue.
-    let toAdopt = pet === 'cat'
-      ? CatQ : DogQ;
-    return toAdopt.dequeue();
+  getFirst() {
+    return CatQ.show();
+  },
+  adoptCat() {
+    CatQ.dequeue();
+    return CatQ;
   }
-}
+};
+
+const DogService = {
+  get() {
+    let showDogs = displayQ(DogQ);
+    return showDogs;
+  },
+  getFirst() {
+    return DogQ.show();
+  },
+  adoptDog() {
+    DogQ.dequeue;
+    return DogQ;
+  }
+};
+
+module.exports = {
+  CatService,
+  DogService,
+};
